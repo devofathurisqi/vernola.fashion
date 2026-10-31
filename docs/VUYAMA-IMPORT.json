@@ -1,0 +1,226 @@
+{
+  "source": "sugarshawl_150_3",
+  "pricing": "verified Vuyama retail-prices.json, not Sugar Shawl selling overrides",
+  "products": 27,
+  "categories": 7,
+  "uniqueSourceImages": 410,
+  "stock": "All unconfirmed; no stock invented",
+  "entries": [
+    {
+      "id": "40280e87-a5dc-4176-88fd-180ad1678d85",
+      "source_key": "vuyama:modal-viscose",
+      "name": "Pashmina Modal Viscose",
+      "price": 59000,
+      "price_confirm": false,
+      "variants": 32
+    },
+    {
+      "id": "9003e3f7-b117-4b85-8a23-d4282965be8f",
+      "source_key": "vuyama:viscose-gradasi",
+      "name": "Viscose Gradasi",
+      "price": 99000,
+      "price_confirm": false,
+      "variants": 12
+    },
+    {
+      "id": "fd95a493-e87a-4108-8341-87eaa38038d0",
+      "source_key": "vuyama:paris-legend",
+      "name": "Paris Legend",
+      "price": 29000,
+      "price_confirm": false,
+      "variants": 65
+    },
+    {
+      "id": "14eaa03d-e404-4055-8300-3a6aabadad42",
+      "source_key": "vuyama:airtech-ultrasoft",
+      "name": "Pashmina Airtech Ultrasoft",
+      "price": 75000,
+      "price_confirm": false,
+      "variants": 8
+    },
+    {
+      "id": "94a0aaeb-e5a6-4e91-872c-835fc1e0e686",
+      "source_key": "vuyama:gana-instan",
+      "name": "Gana Instan",
+      "price": 55000,
+      "price_confirm": false,
+      "variants": 24
+    },
+    {
+      "id": "b796cb94-fe97-46d7-8c08-5d45e97d6a91",
+      "source_key": "vuyama:printed-viscose",
+      "name": "Pashmina Printed Viscose",
+      "price": 99000,
+      "price_confirm": false,
+      "variants": 30
+    },
+    {
+      "id": "44e184fa-3829-4f7e-8a28-9bb45dbc0887",
+      "source_key": "vuyama:motif-tryspan",
+      "name": "Segi4 Motif Tryspan",
+      "price": 79000,
+      "price_confirm": false,
+      "variants": 82
+    },
+    {
+      "id": "fd32f3a6-a750-4282-8db7-798df66dfbc0",
+      "source_key": "vuyama:bamboo-spandex",
+      "name": "Pashmina Bamboo Spandex",
+      "price": 75000,
+      "price_confirm": false,
+      "variants": 20
+    },
+    {
+      "id": "12b4c686-664d-47c9-8066-7a0425fa982d",
+      "source_key": "vuyama:zoya-instan",
+      "name": "Zoya Instan",
+      "price": 85000,
+      "price_confirm": false,
+      "variants": 13
+    },
+    {
+      "id": "2fecce32-3011-4bd2-8d20-c7f5c182dc0d",
+      "source_key": "vuyama:bamboo-slip-on",
+      "name": "Bamboo Slip On",
+      "price": 40000,
+      "price_confirm": false,
+      "variants": 19
+    },
+    {
+      "id": "e47d484c-dd09-4b48-850f-7254283253df",
+      "source_key": "vuyama:paris-japan",
+      "name": "Paris Japan",
+      "price": 49000,
+      "price_confirm": false,
+      "variants": 21
+    },
+    {
+      "id": "d0953061-8e95-4669-88c7-456ae968de4c",
+      "source_key": "vuyama:hawa-instan",
+      "name": "Hawa Instan",
+      "price": 49000,
+      "price_confirm": false,
+      "variants": 20
+    },
+    {
+      "id": "4c134cdd-e7c7-42c3-8b23-1ae7371554c8",
+      "source_key": "vuyama:viscose-highlight",
+      "name": "Pashmina Highlight",
+      "price": 79000,
+      "price_confirm": false,
+      "variants": 14
+    },
+    {
+      "id": "da52a35f-0031-4d5c-8ba1-086a6db19841",
+      "source_key": "vuyama:aisha-khiban",
+      "name": "Aisha Khiban",
+      "price": 85000,
+      "price_confirm": false,
+      "variants": 20
+    },
+    {
+      "id": "b0afb777-20dc-47bb-8909-22e9df1e3da5",
+      "source_key": "vuyama:hayla-khiban",
+      "name": "Hayla Khiban",
+      "price": 49000,
+      "price_confirm": false,
+      "variants": 18
+    },
+    {
+      "id": "4748b468-7fae-4241-89ee-4de2a9e0978d",
+      "source_key": "vuyama:mukena-armani",
+      "name": "Mukena Armani Velvet",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 33
+    },
+    {
+      "id": "2ef5a98a-ee32-4264-8c3e-d0970b6ec82a",
+      "source_key": "vuyama:mukena-segenggam-polos",
+      "name": "Mukena Segenggam Polos",
+      "price": 169000,
+      "price_confirm": false,
+      "variants": 6
+    },
+    {
+      "id": "3465b88d-b365-4f38-8482-715f50720b14",
+      "source_key": "vuyama:mukena-segenggam-lily",
+      "name": "Mukena Segenggam Lily",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 4
+    },
+    {
+      "id": "affbe994-6902-4874-8031-80641d1a91d0",
+      "source_key": "vuyama:mukena-rayon-viscose",
+      "name": "Mukena Rayon Viscose",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 5
+    },
+    {
+      "id": "7ac8d8c4-1b7b-4117-8632-1f7ca931b0ca",
+      "source_key": "vuyama:hampers-soft-box",
+      "name": "Hampers Soft Box",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 1
+    },
+    {
+      "id": "7e74a31b-e29e-44ee-8846-a045b647df14",
+      "source_key": "vuyama:lea-oval-khiban",
+      "name": "Lea Oval Khiban",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 2
+    },
+    {
+      "id": "48a79739-d120-48ce-8821-1776fd2d89b9",
+      "source_key": "vuyama:zea-sport-instan",
+      "name": "Zea Sport Instan",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 2
+    },
+    {
+      "id": "032c15af-f37c-4cf6-822a-772fc827ff7f",
+      "source_key": "vuyama:inner-tali",
+      "name": "Ciput / Inner Tali",
+      "price": 25000,
+      "price_confirm": false,
+      "variants": 0
+    },
+    {
+      "id": "98574d04-d65c-499d-86fa-c9ee8f6ed81f",
+      "source_key": "vuyama:armani-polka",
+      "name": "Armani Polka Series",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 7
+    },
+    {
+      "id": "4db321ea-b6d7-4608-88e4-475d2ecd3c40",
+      "source_key": "vuyama:armani-lasercut",
+      "name": "Armani Lasercut",
+      "price": 279000,
+      "price_confirm": false,
+      "variants": 0
+    },
+    {
+      "id": "32a14993-b9ca-4f83-897b-f143e8ed210d",
+      "source_key": "vuyama:armani-panel-printing",
+      "name": "Armani Panel Printing",
+      "price": 349000,
+      "price_confirm": false,
+      "variants": 0
+    },
+    {
+      "id": "d13de1e7-cfaa-4d1a-8474-c7a13639b8b4",
+      "source_key": "vuyama:mukena-armani-ori",
+      "name": "Mukena Armani Ori Raya",
+      "price": 0,
+      "price_confirm": true,
+      "variants": 10
+    }
+  ]
+}

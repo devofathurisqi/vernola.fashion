@@ -1,0 +1,8 @@
+{
+  "stage": "before",
+  "requests": 3,
+  "products": 31,
+  "decodedBytes": 85376,
+  "gzipEstimate": 16298,
+  "variants": 476
+}

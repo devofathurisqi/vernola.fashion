@@ -1,0 +1,26 @@
+{
+  "name": "vernola-fashion",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4180",
+    "build": "vite build && node scripts/verify-build.mjs",
+    "preview": "vite preview --host 127.0.0.1 --port 4180",
+    "test": "node --test tests/*.test.mjs",
+    "assets:optimize": "node scripts/optimize-assets.mjs",
+    "catalog:import": "node scripts/import-vuyama.mjs",
+    "library:prepare": "node scripts/prepare-shared-library.mjs",
+    "library:publish": "node scripts/publish-shared-assets.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5",
+    "vite": "^6.0.5"
+  }
+}

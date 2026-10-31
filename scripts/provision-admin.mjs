@@ -1,0 +1,5 @@
+// Operator-only helper. Secrets arrive through hidden stdin, never arguments or files.
+// Does not touch database memberships. Use generated membership SQL after this succeeds.
+process.stdin.setEncoding('utf8');if(process.stdin.isTTY)process.stdin.setRawMode(true);
+process.stdout.write('Ready for hidden provisioning JSON on stdin.\n');let input='';
+process.stdin.on('data',async chunk=>{if(chunk.includes('\u0003'))process.exit(130);input+=chunk;if(!/[\r\n]/.test(input))return;process.stdin.pause();try{const p=JSON.parse(input.trim());input='';const headers={apikey:p.key,Authorization:`Bearer ${p.key}`,'Content-Type':'application/json'};const r=await fetch(p.url+'/auth/v1/admin/users',{method:'POST',headers,signal:AbortSignal.timeout(20000),body:JSON.stringify({email:p.email,password:p.password,email_confirm:true,user_metadata:{username:'vernola'}})});const d=await r.json();if(!r.ok){console.log(JSON.stringify({ok:false,status:r.status,error:d.msg||d.message||d.error_code}));process.exit(1)}console.log(JSON.stringify({ok:true,id:d.id,email:d.email}));process.exit(0)}catch(e){console.log(JSON.stringify({ok:false,error:e.message}));process.exit(1)}});

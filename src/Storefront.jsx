@@ -497,7 +497,7 @@ export default function Storefront() {
         <div className="footer-brand">
           <strong>{store.name}</strong>
           <p>{store.tagline}</p>
-          <span>Little things. Lovely days.</span>
+          <span>Cantiknya Dapet, Nyamannya ga bohong</span>
         </div>
         <div>
           <h3>Jelajahi</h3>

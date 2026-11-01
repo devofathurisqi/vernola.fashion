@@ -1,8 +1,8 @@
 import React,{useState,useEffect}from'react';
-import{Plus,Minus,Heart,MessageCircle,Check,ShoppingBag,ZoomIn,PackageCheck,LoaderCircle,RefreshCw,Search,X}from'lucide-react';
+import{Plus,Minus,Heart,Check,ShoppingBag,ZoomIn,PackageCheck,LoaderCircle,RefreshCw,Search,X}from'lucide-react';
 import{Dialog,Picture,Button,Empty}from'./ui';import{money}from'./lib';import{stockFor}from'./domain';import{loadProduct}from'./catalog';
 export default function ProductDialog(props){const card=props.p,[product,setProduct]=useState(card._summary?null:card),[error,setError]=useState(''),[attempt,setAttempt]=useState(0);useEffect(()=>{if(!card._summary)return;let live=true;setError('');loadProduct(card.id,{force:attempt>0,expectedRevision:card.revision,expectedLibraryRevision:card.library_revision}).then(p=>live&&setProduct(p)).catch(e=>live&&setError(e.message));return()=>{live=false}},[card.id,attempt]);if(!product)return <Dialog title={card.name} onClose={props.onClose}><Empty icon={error?RefreshCw:LoaderCircle} title={error?'Koleksi belum dapat dibuka':card.name} text={error||'Menyiapkan detail dan pilihan warnamu…'}>{error&&<Button onClick={()=>setAttempt(n=>n+1)}>Coba lagi</Button>}</Empty></Dialog>;return <LoadedProductDialog {...props} p={product}/>}
-function LoadedProductDialog({ p, store, onClose, add, favorite, isFavorite }) {
+function LoadedProductDialog({ p, onClose, add, favorite, isFavorite }) {
   const [variant, setVariant] = useState(""),
     [photo, setPhoto] = useState(p.images[0]),
     [qty, setQty] = useState(1),
@@ -12,7 +12,7 @@ function LoadedProductDialog({ p, store, onClose, add, favorite, isFavorite }) {
     stock = stockFor(p, variant),
     max = p.stock_confirm ? 99 : Math.min(stock, 99),
     choose = p.has_colors && !variant,
-    canBuy = !choose && (p.stock_confirm || stock > 0) && p.images.length > 0;
+    canBuy = !choose && (p.stock_confirm || stock > 0);
   const photos = [...new Set([...(photo ? [photo] : []), ...p.images])];
   const colors=p.variants.filter(x=>x.name.toLocaleLowerCase('id').includes(colorQuery.trim().toLocaleLowerCase('id')));
   return (
@@ -93,43 +93,6 @@ function LoadedProductDialog({ p, store, onClose, add, favorite, isFavorite }) {
                   ? `${stock} tersedia`
                   : "Stok habis"}
           </p>
-          {p.price_confirm || !p.images.length ? (
-            <a
-              className="btn full"
-              href={`https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`Halo Novola, saya ingin menanyakan harga dan stok ${p.name}${v ? " warna " + v.name : ""}.`)}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Tanyakan kepada admin <MessageCircle size={18} />
-            </a>
-          ) : (
-            <div className="detail-buy">
-              <div className="qty-control">
-                <button
-                  aria-label="Kurangi jumlah"
-                  disabled={qty <= 1}
-                  onClick={() => setQty((n) => n - 1)}
-                >
-                  <Minus size={15} />
-                </button>
-                <span aria-live="polite">{qty}</span>
-                <button
-                  aria-label="Tambah jumlah"
-                  disabled={qty >= max}
-                  onClick={() => setQty((n) => n + 1)}
-                >
-                  <Plus size={15} />
-                </button>
-              </div>
-              <Button
-                disabled={!canBuy || qty > max}
-                onClick={() => add(p, v, qty)}
-              >
-                <ShoppingBag size={17} />
-                {choose ? "Pilih warna dahulu" : "Tambah ke tas"}
-              </Button>
-            </div>
-          )}
           <button
             className={`detail-save ${isFavorite ? "saved" : ""}`}
             onClick={favorite}
@@ -155,6 +118,28 @@ function LoadedProductDialog({ p, store, onClose, add, favorite, isFavorite }) {
               kepada admin sebelum pembayaran.
             </p>
           </details>
+        </div>
+      </div>
+      <div className="detail-purchase">
+        <p id="purchase-hint" role="status">
+          {choose ? "Pilih warna di detail produk untuk melanjutkan."
+            : !canBuy ? "Stok pilihan ini sedang habis."
+            : p.price_confirm ? "Harga dikonfirmasi admin saat memesan via WhatsApp."
+            : `Subtotal: ${money(p.price * qty)}`}
+        </p>
+        <div className="detail-buy">
+          <div className="qty-control">
+            <button aria-label="Kurangi jumlah" disabled={qty <= 1} onClick={() => setQty((n) => n - 1)}>
+              <Minus size={15} />
+            </button>
+            <span aria-live="polite">{qty}</span>
+            <button aria-label="Tambah jumlah" disabled={qty >= max || !canBuy} onClick={() => setQty((n) => n + 1)}>
+              <Plus size={15} />
+            </button>
+          </div>
+          <Button disabled={!canBuy || qty > max} aria-describedby="purchase-hint" onClick={() => add(p, v, qty)}>
+            <ShoppingBag size={17} /> Tambah ke keranjang
+          </Button>
         </div>
       </div>
       {zoom && (

@@ -58,8 +58,8 @@ export function productPayload(product,storeId,master=null){
   if(p.library_product_id){if(!master||master.id!==p.library_product_id)throw Error('Referensi master belum dimuat. Buka ulang editor.');Object.assign(payload,{library_product_id:p.library_product_id,content_overrides:buildLibraryOverrides(p,master),description:'',images:[],has_colors:false,variants:[]});}
   return payload;
 }
-export function orderMessage(lines) {
-  let total = 0;
+export function orderTotals(lines) {
+  let total = 0, quantity = 0, unconfirmed = 0;
   for (const l of lines) {
     if (
       !Number.isInteger(l.qty) ||
@@ -70,9 +70,52 @@ export function orderMessage(lines) {
       !Number.isSafeInteger(l.price * l.qty)
     )
       throw Error("Jumlah atau harga pesanan tidak valid.");
-    total += l.price * l.qty;
+    quantity += l.qty;
+    if (l.price_confirm) unconfirmed += 1;
+    else total += l.price * l.qty;
     if (!Number.isSafeInteger(total))
       throw Error("Total pesanan melebihi batas perhitungan.");
   }
-  return `Halo Novola.fashion, saya ingin konfirmasi pesanan:\n\n${lines.map((l) => `${l.name}${l.color ? " / " + l.color : ""}\n${l.qty} × Rp${l.price.toLocaleString("id-ID")} = Rp${(l.qty * l.price).toLocaleString("id-ID")}`).join("\n\n")}\n\nSubtotal: Rp${lines.reduce((s, l) => s + l.qty * l.price, 0).toLocaleString("id-ID")}\nMohon konfirmasi stok, ongkir, dan total pembayaran.`;
+  return { total, quantity, unconfirmed };
+}
+export function prepareOrder(lines, products) {
+  if (!lines.length) throw Error("Keranjang masih kosong.");
+  orderTotals(lines);
+  let pricesChanged = false;
+  const freshLines = lines.map((l) => {
+    const p = products.find((p) => p.id === l.id && p.active !== false);
+    if (!p) throw Error(`${l.name} sudah tidak tersedia. Hapus dari keranjang untuk melanjutkan.`);
+    const v = p.variants.find((v) => v.id === l.variant_id);
+    if ((p.has_colors && !v) || (!p.has_colors && l.variant_id))
+      throw Error(`Pilihan ${p.name} telah berubah. Hapus lalu pilih ulang produk.`);
+    if (!p.stock_confirm && stockFor(p, l.variant_id) < l.qty)
+      throw Error(`Stok ${p.name} tidak mencukupi. Kurangi jumlah atau tanyakan admin.`);
+    if (Boolean(l.price_confirm) !== Boolean(p.price_confirm) || (!p.price_confirm && l.price !== p.price))
+      pricesChanged = true;
+    return { ...l, name: p.name, color: v?.name || "", price: p.price, price_confirm: Boolean(p.price_confirm) };
+  });
+  orderTotals(freshLines);
+  return { lines: freshLines, pricesChanged };
+}
+export function orderMessage(lines, { notes = "" } = {}) {
+  if (!lines.length) throw Error("Keranjang masih kosong.");
+  const { total, quantity, unconfirmed } = orderTotals(lines);
+  const rupiah = (value) => `Rp${value.toLocaleString("id-ID")}`;
+  const details = lines.map((l, i) => [
+    `${i + 1}. *${l.name}*`,
+    ...(l.color ? [`   Warna: ${l.color}`] : []),
+    `   Jumlah: ${l.qty} pcs`,
+    `   Harga satuan: ${l.price_confirm ? "Menunggu konfirmasi admin" : rupiah(l.price)}`,
+    `   Subtotal: ${l.price_confirm ? "Menunggu konfirmasi admin" : rupiah(l.qty * l.price)}`,
+  ].join("\n")).join("\n\n");
+  const subtotal = unconfirmed === lines.length
+    ? "Subtotal produk: Menunggu konfirmasi admin"
+    : `${unconfirmed ? "Subtotal harga tersedia" : "Subtotal produk"}: ${rupiah(total)}`;
+  return [
+    "Halo Novola.fashion, saya ingin konfirmasi pesanan:",
+    "*RINCIAN PESANAN*\n" + details,
+    `*RINGKASAN*\nTotal: ${quantity} pcs (${lines.length} pilihan)\n${subtotal}${unconfirmed ? `\n${unconfirmed} pilihan produk menunggu konfirmasi harga.` : ""}`,
+    ...(notes.trim() ? [`*CATATAN*\n${notes.trim()}`] : []),
+    "Belum termasuk ongkir. Mohon konfirmasi stok, ongkir, dan total pembayaran.",
+  ].join("\n\n");
 }

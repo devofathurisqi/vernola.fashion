@@ -12,6 +12,7 @@ Repository: [devofathurisqi/vernola.fashion](https://github.com/devofathurisqi/v
 - Preview desain juga hanya berisi 4 produk, sehingga mode preview tidak memunculkan kembali listing Vuyama yang sudah dihapus.
 - ID/slug teknis `vernola-fashion`, alias Auth lama, folder lokal dan nama repository GitHub dipertahankan untuk kompatibilitas. **Jangan mengganti VITE_STORE_SLUG di Vercel**; env yang sudah dipasang tetap berlaku. Login pengguna memakai novola, bukan alias teknis tersebut.
 - Kategori kosong disimpan untuk pengelolaan admin dan disembunyikan dari katalog pelanggan.
+- Detail produk menyediakan **Tambah ke keranjang** yang tetap terlihat di HP, termasuk untuk produk dengan harga menunggu konfirmasi. Checkout WhatsApp membawa seluruh produk, warna, jumlah, rincian harga/subtotal yang tersedia, dan catatan; harga yang belum dikonfirmasi tidak ditampilkan sebagai Rp0. Verifikasi: [qa/RESULTS-CART.md](qa/RESULTS-CART.md).
 - Materi siap kirim: [panduan klien PDF](docs/Panduan-Klien-Novola-Fashion.pdf) dan [video promosi 34 detik](deliverables/Promo-Katalog-Dashboard-350-Novola.mp4). Panduan yang dapat diperbarui: [docs/PANDUAN-KLIEN.md](docs/PANDUAN-KLIEN.md). Bagian verifikasi V1/V2/V3 dan detail di bawah adalah rekaman implementasi sebelumnya; angka 31 produk dan akun lama sudah disupersede oleh status ini.
 - Setup/migration impor lama tetap disimpan sebagai riwayat. **Jangan menjalankan ulang seed Vuyama pada toko ini.** Tidak ada SQL baru untuk perubahan brand dan akun ini.
 
@@ -113,7 +114,7 @@ Vercel untuk repository ini: root directory **`.`** (biarkan default), preset Vi
 
 Empat contoh Vernola berasal dari folder Drive pengguna. Foto asli `public/assets/product-*.jpg` dipertahankan. Vuyama memakai foto/warna/deskripsi dari `../sugarshawl_150_3/src/data/products.json`, harga dari `retail-prices.json`. Harga pengadaan/reseller tidak diimpor. Logo terbaru hasil koreksi nama berada di `public/assets/novola-fashion.png` dan `novola-logo.webp`; tidak diklaim identik secara piksel dengan sumber. Brief: [docs/FINAL-ENHANCEMENT-BRIEF.md](docs/FINAL-ENHANCEMENT-BRIEF.md).
 
-- `npm test`: 17 pemeriksaan domain, harga retail, aset shared dan override sparse.
+- `npm test`: 22 pemeriksaan domain, keranjang/WhatsApp, harga retail, aset shared dan override sparse.
 - `npm run build`: production build dan verifier bundle/aset.
 - `tests/shared-library-local.sql`: uji RLS dan listing/stock terpisah, HANYA PostgreSQL lokal disposable dengan mock Auth/Storage.
 - `scripts/test-migration-preservation.mjs`: membuat fixture SQL lokal untuk memeriksa edit lama tidak hilang.

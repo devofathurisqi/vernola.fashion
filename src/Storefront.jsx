@@ -24,7 +24,7 @@ import {
 import { brand } from "./config";
 import { loadCatalog,loadProduct,loadCheckoutProducts } from "./catalog";
 import {variantCount} from './library-model';
-import { stockFor, orderMessage } from "./domain";
+import { stockFor, orderMessage, orderTotals, prepareOrder } from "./domain";
 import { money, productStock, readStorage, persist } from "./lib";
 import { Dialog, Picture, Empty, Button, Toast } from "./ui";
 const preview = new URLSearchParams(location.search).get("preview") === "1",
@@ -62,6 +62,7 @@ export default function Storefront() {
     [busy, setBusy] = useState(false),
     [notes, setNotes] = useState("");
   const store = data?.store || brand;
+  const totals = orderTotals(bag);
   async function refresh(force = false) {
     setError("");
     try {
@@ -99,7 +100,7 @@ export default function Storefront() {
       old = bag.find((l) => l.key === key),
       max = p.stock_confirm ? 99 : Math.min(99, stockFor(p, v?.id));
     if ((old?.qty || 0) + qty > max) {
-      setToast("Jumlah pada tas sudah mencapai batas stok.");
+      setToast("Jumlah pada keranjang sudah mencapai batas stok.");
       return;
     }
     const line = {
@@ -110,53 +111,33 @@ export default function Storefront() {
       color: v?.name || "",
       qty: (old?.qty || 0) + qty,
       price: p.price,
+      price_confirm: Boolean(p.price_confirm),
       image: v?.image || p.images[0],
     };
     setBag((b) =>
       old ? b.map((x) => (x.key === key ? line : x)) : [...b, line],
     );
     setSelected(null);
-    setToast("Pilihanmu ditambahkan ke tas.");
+    setToast("Pilihanmu ditambahkan ke keranjang.");
     setBagOpen(true);
   }
   async function changeQty(line, delta) {
     try{const p=preview?data?.products.find(p=>p.id===line.id):await loadProduct(line.id);const max=p.stock_confirm?99:Math.min(99,stockFor(p,line.variant_id));setBag(b=>b.map(x=>{const next=x.qty+delta;return x.key===line.key&&next>=1&&next<=max?{...x,qty:next}:x}));}catch(e){setToast(e.message)}
   }
   async function checkout() {
+    if (busy || !bag.length) return;
     setBusy(true);
     try {
       const fresh = preview ? data : {store:(await loadCatalog({force:true})).store,products:await loadCheckoutProducts(bag.map(l=>l.id))};
-      let changed = false;
-      const lines = bag.map((l) => {
-        const p = fresh.products.find((p) => p.id === l.id);
-        if (!p)
-          throw Error(
-            `${l.name} sudah tidak tersedia. Hapus dari tas untuk melanjutkan.`,
-          );
-        const v = p.variants.find((v) => v.id === l.variant_id);
-        if ((p.has_colors && !v) || (!p.has_colors && l.variant_id))
-          throw Error(
-            `Pilihan ${p.name} telah berubah. Hapus lalu pilih ulang produk.`,
-          );
-        if (p.price_confirm)
-          throw Error(
-            `Harga ${p.name} perlu dikonfirmasi. Hubungi admin terlebih dahulu.`,
-          );
-        if (!p.stock_confirm && stockFor(p, l.variant_id) < l.qty)
-          throw Error(
-            `Stok ${p.name} tidak mencukupi. Kurangi jumlah atau tanyakan admin.`,
-          );
-        if (l.price !== p.price) changed = true;
-        return { ...l, name: p.name, color: v?.name || "", price: p.price };
-      });
+      const { lines, pricesChanged } = prepareOrder(bag, fresh.products);
       setBag(lines);
-      if (changed)
+      if (pricesChanged)
         throw Error(
-          "Harga terbaru sudah diperbarui di tas. Periksa subtotal, lalu lanjutkan kembali.",
+          "Harga terbaru sudah diperbarui di keranjang. Periksa subtotal, lalu lanjutkan kembali.",
         );
       if (!fresh.store.whatsapp) throw Error("Nomor pemesanan belum tersedia.");
       location.assign(
-        `https://wa.me/${fresh.store.whatsapp}?text=${encodeURIComponent(orderMessage(lines) + (notes.trim() ? `\n\nCatatan: ${notes.trim()}` : ""))}`,
+        `https://wa.me/${fresh.store.whatsapp}?text=${encodeURIComponent(orderMessage(lines, { notes }))}`,
       );
     } catch (e) {
       setNotice(e.message);
@@ -223,12 +204,12 @@ export default function Storefront() {
           </button>
           <button
             className="bag-trigger"
-            aria-label={`Buka tas, ${bag.reduce((a, l) => a + l.qty, 0)} item`}
+            aria-label={`Buka keranjang, ${totals.quantity} item`}
             onClick={() => setBagOpen(true)}
           >
             <ShoppingBag size={19} />
-            <span>Tas</span>
-            <b>{bag.reduce((a, l) => a + l.qty, 0)}</b>
+            <span>Keranjang</span>
+            <b>{totals.quantity}</b>
           </button>
         </div>
       </header>
@@ -456,7 +437,7 @@ export default function Storefront() {
               [
                 ShoppingBag,
                 "02",
-                "Simpan di tas",
+                "Simpan di keranjang",
                 "Pilih warna dan jumlah. Kumpulkan semua favoritmu.",
               ],
               [
@@ -568,14 +549,14 @@ export default function Storefront() {
       )}
       {bagOpen && (
         <Dialog
-          title="Tas belanja"
+          title="Keranjang belanja"
           onClose={() => setBagOpen(false)}
           className="bag-dialog"
         >
           <div className="dialog-heading">
             <div className="eyebrow">YOUR LOVELY FINDS</div>
             <h2>
-              Tas belanja <span>({bag.length})</span>
+              Keranjang belanja <span>({totals.quantity} item)</span>
             </h2>
           </div>
           {!bag.length ? (
@@ -602,18 +583,19 @@ export default function Storefront() {
                     <div>
                       <h3>{l.name}</h3>
                       <p>{l.color || "Tanpa pilihan warna"}</p>
-                      <strong>{money(l.price)}</strong>
+                      <strong>{l.price_confirm ? "Harga menunggu konfirmasi" : `${money(l.price)} / pcs`}</strong>
                       <div className="qty-control">
                         <button
                           aria-label={`Kurangi ${l.name}`}
                           onClick={() => changeQty(l, -1)}
-                          disabled={l.qty <= 1}
+                          disabled={busy || l.qty <= 1}
                         >
                           <Minus size={14} />
                         </button>
                         <span>{l.qty}</span>
                         <button
                           aria-label={`Tambah ${l.name}`}
+                          disabled={busy || l.qty >= 99}
                           onClick={() => changeQty(l, 1)}
                         >
                           <Plus size={14} />
@@ -623,6 +605,7 @@ export default function Storefront() {
                     <button
                       className="icon"
                       aria-label={`Hapus ${l.name}`}
+                      disabled={busy}
                       onClick={() =>
                         setBag((b) => b.filter((x) => x.key !== l.key))
                       }
@@ -637,6 +620,7 @@ export default function Storefront() {
                   Catatan untuk admin <span>(opsional)</span>
                   <textarea
                     value={notes}
+                    disabled={busy}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Misalnya, pertanyaan bahan atau pengiriman…"
                     maxLength={500}
@@ -644,18 +628,21 @@ export default function Storefront() {
                   />
                 </label>
                 <div className="subtotal">
-                  <span>Subtotal produk</span>
-                  <strong>
-                    {money(bag.reduce((a, l) => a + l.price * l.qty, 0))}
+                  <span>{totals.unconfirmed && totals.unconfirmed < bag.length ? "Subtotal harga tersedia" : "Subtotal produk"}</span>
+                  <strong className={totals.unconfirmed === bag.length ? "unconfirmed-price" : ""}>
+                    {totals.unconfirmed === bag.length ? "Menunggu konfirmasi admin" : money(totals.total)}
                   </strong>
                 </div>
                 <p>
-                  Belum termasuk ongkir. Harga dan stok diperiksa kembali
-                  sebelum membuka WhatsApp.
+                  {totals.unconfirmed > 0 && `${totals.unconfirmed} pilihan produk menunggu konfirmasi harga. `}
+                  Belum termasuk ongkir. Seluruh isi keranjang dan catatan akan masuk ke pesan WhatsApp. Harga dan stok diperiksa kembali sebelum melanjutkan.
                 </p>
                 <Button className="full" busy={busy} onClick={checkout}>
                   Lanjut ke WhatsApp <ArrowUpRight size={18} />
                 </Button>
+                <button className="text-link bag-continue" disabled={busy} onClick={() => setBagOpen(false)}>
+                  Lanjut belanja <ArrowRight size={15} />
+                </button>
                 <small>
                   <PackageCheck size={13} /> Pesanan dikonfirmasi langsung oleh
                   admin.

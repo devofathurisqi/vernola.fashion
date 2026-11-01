@@ -1,0 +1,23 @@
+1
+00:00:00,250 --> 00:00:04,700
+Tiga ratus lima puluh ribu, sudah dapat katalog plus dashboard?
+
+2
+00:00:05,150 --> 00:00:09,150
+Ini contoh website Novola Fashion. Nyaman dibuka dari HP.
+
+3
+00:00:09,650 --> 00:00:15,400
+Dari dashboard, kamu bisa tambah produk, ganti foto, dan edit harga sendiri.
+
+4
+00:00:15,900 --> 00:00:20,700
+Kategori, pilihan warna, sampai stok juga bisa kamu atur.
+
+5
+00:00:21,200 --> 00:00:26,150
+Pelanggan tinggal pilih produk, lalu lanjut pesan lewat WhatsApp.
+
+6
+00:00:26,650 --> 00:00:33,200
+Tiga ratus lima puluh ribu, sekali bayar. Mau yang seperti ini? Chat saya sekarang.

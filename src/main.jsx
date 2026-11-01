@@ -8,7 +8,7 @@ createRoot(document.getElementById("root")).render(
     <Suspense
       fallback={
         <div className="boot">
-          <span className="boot-mark">V</span>Memuat Vernola Studio…
+          <span className="boot-mark">N</span>Memuat Novola Studio…
         </div>
       }
     >

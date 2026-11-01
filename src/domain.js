@@ -74,5 +74,5 @@ export function orderMessage(lines) {
     if (!Number.isSafeInteger(total))
       throw Error("Total pesanan melebihi batas perhitungan.");
   }
-  return `Halo Vernola.fashion, saya ingin konfirmasi pesanan:\n\n${lines.map((l) => `${l.name}${l.color ? " / " + l.color : ""}\n${l.qty} × Rp${l.price.toLocaleString("id-ID")} = Rp${(l.qty * l.price).toLocaleString("id-ID")}`).join("\n\n")}\n\nSubtotal: Rp${lines.reduce((s, l) => s + l.qty * l.price, 0).toLocaleString("id-ID")}\nMohon konfirmasi stok, ongkir, dan total pembayaran.`;
+  return `Halo Novola.fashion, saya ingin konfirmasi pesanan:\n\n${lines.map((l) => `${l.name}${l.color ? " / " + l.color : ""}\n${l.qty} × Rp${l.price.toLocaleString("id-ID")} = Rp${(l.qty * l.price).toLocaleString("id-ID")}`).join("\n\n")}\n\nSubtotal: Rp${lines.reduce((s, l) => s + l.qty * l.price, 0).toLocaleString("id-ID")}\nMohon konfirmasi stok, ongkir, dan total pembayaran.`;
 }

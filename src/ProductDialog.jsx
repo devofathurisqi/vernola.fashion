@@ -48,7 +48,7 @@ function LoadedProductDialog({ p, store, onClose, add, favorite, isFavorite }) {
           </div>
         </div>
         <div className="detail-info">
-          <div className="eyebrow">THE VERNOLA COLLECTION</div>
+          <div className="eyebrow">THE NOVOLA COLLECTION</div>
           <h2>{p.name}</h2>
           <div className="detail-price">
             {p.price_confirm ? "Tanyakan harga" : money(p.price)}
@@ -96,7 +96,7 @@ function LoadedProductDialog({ p, store, onClose, add, favorite, isFavorite }) {
           {p.price_confirm || !p.images.length ? (
             <a
               className="btn full"
-              href={`https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`Halo Vernola, saya ingin menanyakan harga dan stok ${p.name}${v ? " warna " + v.name : ""}.`)}`}
+              href={`https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`Halo Novola, saya ingin menanyakan harga dan stok ${p.name}${v ? " warna " + v.name : ""}.`)}`}
               target="_blank"
               rel="noreferrer"
             >

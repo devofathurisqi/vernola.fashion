@@ -68,7 +68,7 @@ export default function Storefront() {
       const result = preview
         ? (await import("./preview")).previewData
         : await loadCatalog({ force });
-      setData(result);
+      setData({...result,categories:result.categories.filter(c=>result.products.some(p=>p.category_id===c.id))});
     } catch (e) {
       setError(e.message);
     } finally {
@@ -183,19 +183,19 @@ export default function Storefront() {
         >
           <Menu />
         </button>
-        <a className="shop-logo" href="/" aria-label="Beranda Vernola.fashion">
+        <a className="shop-logo" href="/" aria-label="Beranda Novola.fashion">
           <img
-            src="/assets/vernola-logo.webp"
+            src="/assets/novola-logo.webp"
             width="310"
             height="174"
-            alt="Vernola.fashion"
+            alt="Novola.fashion"
           />
         </a>
         <nav>
           <a href="#koleksi" className="selected">
             Koleksi <span className="nav-dot" />
           </a>
-          <a href="#pilihan">Pilihan Vernola</a>
+          <a href="#pilihan">Pilihan Novola</a>
           <a href="#cerita">Cerita kami</a>
         </nav>
         <div className="shop-actions">
@@ -240,11 +240,11 @@ export default function Storefront() {
       <main>
         <section className="hero-v2">
           <div className="hero-decoration" aria-hidden="true">
-            V
+            N
           </div>
           <div className="hero-text">
             <div className="eyebrow">
-              <span /> THE VERNOLA EDIT
+              <span /> THE NOVOLA EDIT
             </div>
             <h1>
               Warna lembut.
@@ -274,7 +274,7 @@ export default function Storefront() {
             <div className="hero-arch">
               <Picture
                 src="/assets/product-9.jpg"
-                alt="Gaya hijab lembut dari koleksi Vernola"
+                alt="Gaya hijab lembut dari koleksi Novola"
                 priority
                 sizes="(max-width:700px) 75vw, 35vw"
               />
@@ -302,7 +302,7 @@ export default function Storefront() {
               </span>
             </div>
             <span className="hero-edition">
-              VERNOLA.FASHION / EVERYDAY COLLECTION
+              NOVOLA.FASHION / EVERYDAY COLLECTION
             </span>
           </div>
         </section>
@@ -405,7 +405,7 @@ export default function Storefront() {
           <div className="story-images">
             <Picture
               src="/assets/product-8.jpg"
-              alt="Inspirasi hijab Vernola untuk keseharian"
+              alt="Inspirasi hijab Novola untuk keseharian"
               sizes="(max-width:700px) 90vw, 40vw"
             />
             <div className="story-quote">
@@ -417,7 +417,7 @@ export default function Storefront() {
             </div>
           </div>
           <div className="story-copy">
-            <div className="eyebrow">A NOTE FROM VERNOLA</div>
+            <div className="eyebrow">A NOTE FROM NOVOLA</div>
             <h2>
               Cantik itu,
               <br />
@@ -432,12 +432,12 @@ export default function Storefront() {
             </p>
             <p>
               Dari hijab favorit sampai atasan yang melengkapi gaya—temukan
-              versimu bersama Vernola.fashion.
+              versimu bersama Novola.fashion.
             </p>
             <a href="#koleksi" className="text-link">
               Kenali koleksi kami <ArrowUpRight size={17} />
             </a>
-            <span className="signature">With love, Vernola.</span>
+            <span className="signature">With love, Novola.</span>
           </div>
         </section>
         <section id="panduan" className="guide-v2 wrap">
@@ -489,7 +489,7 @@ export default function Storefront() {
             target="_blank"
             rel="noreferrer"
           >
-            Sapa Vernola <ArrowUpRight size={18} />
+            Sapa Novola <ArrowUpRight size={18} />
           </a>
         </section>
       </main>
@@ -502,7 +502,7 @@ export default function Storefront() {
         <div>
           <h3>Jelajahi</h3>
           <a href="#koleksi">Semua koleksi</a>
-          <a href="#pilihan">Pilihan Vernola</a>
+          <a href="#pilihan">Pilihan Novola</a>
           <a href="#cerita">Cerita kami</a>
         </div>
         <div>
@@ -515,7 +515,7 @@ export default function Storefront() {
           >
             WhatsApp <ArrowUpRight size={14} />
           </a>
-          <a href="/admin">Vernola Studio</a>
+          <a href="/admin">Novola Studio</a>
         </div>
         <div className="footer-line">
           <span>
@@ -532,7 +532,7 @@ export default function Storefront() {
           onClose={() => setMobile(false)}
           className="mobile-menu"
         >
-          <div className="eyebrow">EXPLORE VERNOLA</div>
+          <div className="eyebrow">EXPLORE NOVOLA</div>
           <h2>Temukan gayamu.</h2>
           <a
             href="#koleksi"
@@ -551,7 +551,7 @@ export default function Storefront() {
               <ChevronRight size={18} />
             </button>
           ))}
-          <a href="/admin">Masuk Vernola Studio</a>
+          <a href="/admin">Masuk Novola Studio</a>
         </Dialog>
       )}
       {selected && (
@@ -693,7 +693,7 @@ function ProductCard({ p, data, favorites, favorite, open }) {
         </button>
         {p.featured && (
           <span className="product-badge">
-            <Sparkles size={10} /> VERNOLA PICK
+            <Sparkles size={10} /> NOVOLA PICK
           </span>
         )}
         <button
@@ -841,7 +841,7 @@ function Catalog({
           onChange={(e) => setSort(e.target.value)}
           aria-label="Urutkan koleksi"
         >
-          <option value="recommended">Pilihan Vernola</option><option value="new">Terbaru</option>
+          <option value="recommended">Pilihan Novola</option><option value="new">Terbaru</option>
           <option value="low">Harga terendah</option>
           <option value="high">Harga tertinggi</option>
           <option value="name">Nama A–Z</option>

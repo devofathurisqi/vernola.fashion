@@ -4,7 +4,7 @@ if(/sb_secret_/.test(html))throw Error('Secret in HTML');
 if(html.includes('supabase-'))throw Error('Auth SDK preloaded on customer route');
 for(const f of fs.readdirSync('dist/assets').filter(f=>f.endsWith('.js'))){
  const code=fs.readFileSync('dist/assets/'+f,'utf8');
- if(/sb_secret_[A-Za-z0-9_-]+|adminvernola\d+/i.test(code))throw Error('Credential in bundle');
+ if(/sb_secret_[A-Za-z0-9_-]+|(?:adminvernola|novolaadmin)\d+/i.test(code))throw Error('Credential in bundle');
 }
 const manifest=JSON.parse(fs.readFileSync('src/local-image-manifest.json'));
 for(const[src,m]of Object.entries(manifest))for(const p of [src,m.src,...m.srcset.split(', ').filter(Boolean).map(x=>x.split(' ')[0])])if(!fs.existsSync('dist'+p))throw Error('Missing built asset '+p);

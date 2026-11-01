@@ -51,7 +51,7 @@
 .studio-brand > div > span {
   display: block;
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 7px;
   letter-spacing: 0.4em;
@@ -301,7 +301,7 @@
 }
 .studio-page-heading h1 {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 28px;
   font-weight: 500;
@@ -446,7 +446,7 @@
 }
 .metric > strong {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 32px;
   letter-spacing: -0.05em;
@@ -493,7 +493,7 @@
 }
 .panel-heading h2 {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -591,7 +591,7 @@
 }
 .attention-panel h2 {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -938,7 +938,7 @@
 }
 .category-admin-card h2 {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 15px;
   font-weight: 500;
@@ -1078,7 +1078,7 @@
 }
 .settings-note h2 {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -1132,7 +1132,7 @@
 }
 .login-brand > span {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 8px;
   letter-spacing: 0.25em;
@@ -1356,7 +1356,7 @@
 }
 .editor-top h2 {
   font-family:
-    Vernola Sans,
+    Novola Sans,
     sans-serif;
   font-size: 23px;
   font-weight: 500;
@@ -2921,7 +2921,7 @@
     font-size: 10px;
   }
 }
-.shared-content-note{display:flex;gap:12px;align-items:start;border:1px solid #efc7da;background:#fff0f7;padding:18px;border-radius:10px;margin-bottom:20px;color:#b94d80}.shared-content-note strong{font-size:12px;font-weight:500}.shared-content-note p{font-size:11px;color:#967085;margin-top:6px;line-height:1.7}.library-count{display:flex;gap:10px;align-items:center;background:white;border:1px solid var(--line);border-radius:20px;padding:10px 15px;font-size:10px;color:#a56a87}.library-intro{display:flex;align-items:center;gap:18px;background:#fbd4e7;border:1px solid #efbdd5;border-radius:11px;padding:23px 25px;margin-bottom:22px;color:#b44378}.library-intro strong{font-size:14px;font-weight:500;color:#8d2b58}.library-intro p{font-size:11px;color:#a46684;margin-top:7px}.supplier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:25px}.supplier-photo{aspect-ratio:4/3;position:relative;background:#f2e8ed;overflow:hidden}.supplier-photo>img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}.supplier-photo>span,.supplier-photo>b{position:absolute;font-size:8px;border-radius:4px;padding:6px 8px;background:#fff8fcef;color:#a35e80;left:12px;top:12px;font-weight:400}.supplier-photo>b{left:auto;right:12px;display:flex;align-items:center;gap:5px;background:#e7f5ec;color:#45856b}.supplier-copy{padding:20px}.supplier-copy h2{font-family:Vernola Sans,sans-serif;font-size:14px;font-weight:500;letter-spacing:-.01em;line-height:1.6}.supplier-copy>p{font-size:10px;color:#b28a9f;margin-top:7px}.supplier-copy>div{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 0;font-size:9px;color:#b28a9f}.supplier-copy>div>strong{font-weight:500;font-size:11px;color:#b34f80}.supplier-copy .btn{font-size:10px;min-height:42px;gap:10px}.supplier-copy .btn:disabled{opacity:.75}.supplier-card:hover{border-color:#e3b6cd}.studio-nav>button{flex-shrink:0}
+.shared-content-note{display:flex;gap:12px;align-items:start;border:1px solid #efc7da;background:#fff0f7;padding:18px;border-radius:10px;margin-bottom:20px;color:#b94d80}.shared-content-note strong{font-size:12px;font-weight:500}.shared-content-note p{font-size:11px;color:#967085;margin-top:6px;line-height:1.7}.library-count{display:flex;gap:10px;align-items:center;background:white;border:1px solid var(--line);border-radius:20px;padding:10px 15px;font-size:10px;color:#a56a87}.library-intro{display:flex;align-items:center;gap:18px;background:#fbd4e7;border:1px solid #efbdd5;border-radius:11px;padding:23px 25px;margin-bottom:22px;color:#b44378}.library-intro strong{font-size:14px;font-weight:500;color:#8d2b58}.library-intro p{font-size:11px;color:#a46684;margin-top:7px}.supplier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:25px}.supplier-photo{aspect-ratio:4/3;position:relative;background:#f2e8ed;overflow:hidden}.supplier-photo>img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}.supplier-photo>span,.supplier-photo>b{position:absolute;font-size:8px;border-radius:4px;padding:6px 8px;background:#fff8fcef;color:#a35e80;left:12px;top:12px;font-weight:400}.supplier-photo>b{left:auto;right:12px;display:flex;align-items:center;gap:5px;background:#e7f5ec;color:#45856b}.supplier-copy{padding:20px}.supplier-copy h2{font-family:Novola Sans,sans-serif;font-size:14px;font-weight:500;letter-spacing:-.01em;line-height:1.6}.supplier-copy>p{font-size:10px;color:#b28a9f;margin-top:7px}.supplier-copy>div{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 0;font-size:9px;color:#b28a9f}.supplier-copy>div>strong{font-weight:500;font-size:11px;color:#b34f80}.supplier-copy .btn{font-size:10px;min-height:42px;gap:10px}.supplier-copy .btn:disabled{opacity:.75}.supplier-card:hover{border-color:#e3b6cd}.studio-nav>button{flex-shrink:0}
 @media(min-width:1500px){.supplier-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:1050px){.supplier-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
 @media(max-width:600px){.library-intro{padding:20px;gap:13px;align-items:start}.library-intro strong{font-size:12px}.library-intro p{font-size:10px}.library-count{font-size:9px}.supplier-grid{gap:13px;margin-top:18px}.supplier-copy{padding:13px}.supplier-copy h2{font-size:12px}.supplier-copy>p{font-size:9px}.supplier-copy>div{display:block;margin:14px 0}.supplier-copy>div>strong{display:block;margin-top:6px;font-size:11px}.supplier-photo>span,.supplier-photo>b{font-size:7px;padding:5px 6px;left:7px;top:7px}.supplier-photo>b{top:auto;bottom:8px;left:auto;right:7px}.supplier-copy .btn{font-size:9px;min-height:43px;padding:10px 8px;gap:6px}.shared-content-note{padding:15px}.shared-content-note p{font-size:10px}}

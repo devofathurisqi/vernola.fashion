@@ -137,7 +137,7 @@ export default function Admin() {
       if (!members?.length) {
         setAuthorized(false);
         throw Error(
-          "Akun belum memiliki akses ke toko Vernola. Hubungkan akun melalui SQL membership.",
+          "Akun belum memiliki akses ke toko Novola. Hubungkan akun melalui SQL membership.",
         );
       }
       setData(catalog);
@@ -211,7 +211,7 @@ export default function Admin() {
   if (boot)
     return (
       <div className="boot">
-        <span className="boot-mark">V</span>Menyiapkan Vernola Studio…
+        <span className="boot-mark">N</span>Menyiapkan Novola Studio…
       </div>
     );
   if (!session && !demo) return <Login error={error} />;
@@ -237,10 +237,10 @@ export default function Admin() {
       <aside className={`studio-sidebar ${mobile ? "open" : ""}`}>
         <a className="studio-brand" href="/admin">
           <span>
-            V<span>✳</span>
+            N<span>✳</span>
           </span>
           <div>
-            vernola<span>STUDIO</span>
+            novola<span>STUDIO</span>
           </div>
         </a>
         <button
@@ -251,7 +251,7 @@ export default function Admin() {
           <X />
         </button>
         <div className="store-switch">
-          <span className="store-avatar">V</span>
+          <span className="store-avatar">N</span>
           <div>
             <strong>{data.store.name}</strong>
             <small>Ruang kelola toko</small>
@@ -290,9 +290,9 @@ export default function Admin() {
           </a>
         </div>
         <div className="sidebar-account">
-          <span className="account-avatar">VE</span>
+          <span className="account-avatar">NO</span>
           <div>
-            <strong>vernola</strong>
+            <strong>novola</strong>
             <small>Administrator</small>
           </div>
           <button
@@ -346,7 +346,7 @@ export default function Admin() {
             >
               Lihat toko <ArrowUpRight size={15} />
             </a>
-            <span className="top-avatar">V</span>
+            <span className="top-avatar">N</span>
           </div>
         </header>
         {demo && (
@@ -368,7 +368,7 @@ export default function Admin() {
                 <div>
                   <div className="eyebrow">YOUR STORE, YOUR STORY</div>
                   <h1>
-                    Halo, Vernola <span className="hello-flower">✳</span>
+                    Halo, Novola <span className="hello-flower">✳</span>
                   </h1>
                   <p>Semua yang kamu butuhkan untuk merawat koleksimu.</p>
                 </div>
@@ -396,13 +396,13 @@ export default function Admin() {
                 <div className="welcome-art">
                   <Picture
                     src="/assets/product-9.jpg"
-                    alt="Koleksi Vernola"
+                    alt="Koleksi Novola"
                     sizes="220px"
                   />
                   <span>
                     With love,
                     <br />
-                    <em>Vernola.</em>
+                    <em>Novola.</em>
                   </span>
                   <Flower2 size={44} />
                 </div>
@@ -698,7 +698,7 @@ export default function Admin() {
           )}
         </main>
         <div className="studio-bottom">
-          <span>VERNOLA STUDIO</span>
+          <span>NOVOLA STUDIO</span>
           <span>
             Made for the way you grow. <Flower2 size={12} />
           </span>
@@ -818,7 +818,7 @@ function Login({ error: initialError }) {
     <div className="studio-login">
       <div className="login-story">
         <a href="/" className="login-brand">
-          vernola<span>STUDIO</span>
+          novola<span>STUDIO</span>
         </a>
         <div>
           <span className="eyebrow">A LITTLE SPACE FOR BIG DREAMS</span>
@@ -838,7 +838,7 @@ function Login({ error: initialError }) {
         <div className="login-photo">
           <Picture
             src="/assets/product-9.jpg"
-            alt="Koleksi Vernola"
+            alt="Koleksi Novola"
             sizes="400px"
             priority
           />
@@ -870,9 +870,9 @@ function Login({ error: initialError }) {
           }}
         >
           <span className="login-emblem">
-            V<Flower2 size={20} />
+            N<Flower2 size={20} />
           </span>
-          <div className="eyebrow">WELCOME TO VERNOLA STUDIO</div>
+          <div className="eyebrow">WELCOME TO NOVOLA STUDIO</div>
           <h2>Senang bertemu lagi.</h2>
           <p>Masuk untuk merawat koleksi dan mengelola tokomu.</p>
           <label>
@@ -923,7 +923,7 @@ function Login({ error: initialError }) {
           </small>
         </form>
         <span className="login-copyright">
-          © {new Date().getFullYear()} Vernola.fashion · Made with care.
+          © {new Date().getFullYear()} Novola.fashion · Made with care.
         </span>
       </div>
     </div>
@@ -1346,7 +1346,7 @@ function ProductEditor({
       >
         <div className="editor-top">
           <div>
-            <div className="eyebrow">VERNOLA STUDIO / KOLEKSI</div>
+            <div className="eyebrow">NOVOLA STUDIO / KOLEKSI</div>
             <h2>
               {p.id ? "Rawat detail koleksimu." : "Satu koleksi, cerita baru."}
             </h2>
@@ -1378,7 +1378,7 @@ function ProductEditor({
               </label>
               <label className="toggle-row">
                 <div>
-                  <strong>Pilihan Vernola</strong>
+                  <strong>Pilihan Novola</strong>
                   <span>Masukkan ke koleksi unggulan.</span>
                 </div>
                 <input
@@ -1411,7 +1411,7 @@ function ProductEditor({
                   SKU <span>(opsional)</span>
                   <input
                     value={p.sku || ""}
-                    placeholder="VRN-001"
+                    placeholder="NVL-001"
                     maxLength={80}
                     onChange={(e) => set("sku", e.target.value)}
                   />
@@ -1812,7 +1812,7 @@ function ProductEditor({
               </label>
               <label className="toggle-row">
                 <div>
-                  <strong>Pilihan Vernola</strong>
+                  <strong>Pilihan Novola</strong>
                   <span>Masuk koleksi unggulan.</span>
                 </div>
                 <input
@@ -2028,7 +2028,7 @@ function SettingsForm({ store, onSave }) {
             <ShieldCheck size={26} />
             <h2>Akses admin</h2>
             <p>
-              Username: <strong>vernola</strong>
+              Username: <strong>novola</strong>
             </p>
             <p>
               Kata sandi dikelola melalui Supabase Auth. Hubungi pengelola

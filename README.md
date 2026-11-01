@@ -1,10 +1,21 @@
-# Vernola.fashion — katalog & dashboard
+# Novola.fashion — katalog & dashboard
 
 Implementasi pertama paket katalog Rp350.000 sekali bayar. Baca file ini saat melanjutkan pekerjaan atau menyiapkan klien berikutnya. Toko lain di workspace tidak diubah.
 
 Repository: [devofathurisqi/vernola.fashion](https://github.com/devofathurisqi/vernola.fashion). Folder aplikasi ini merupakan root repository; aplikasi tidak bergantung pada toko lain untuk install, test, atau build.
 
-## Status final
+## Status terbaru 1 November 2026
+
+- Brand yang benar adalah **Novola.fashion**. Seluruh tulisan, logo, metadata, pesan WhatsApp dan tampilan admin sudah disesuaikan.
+- Username admin **novola**. Kata sandi sudah diperbarui langsung melalui Supabase Auth sesuai instruksi pemilik; nilainya tidak disimpan dalam repository atau panduan publik.
+- Katalog toko kini berisi **4 contoh produk Novola**. Sebanyak 27 listing Vuyama telah dihapus dari tenant ini melalui akses admin, tanpa SQL Editor. Master/foto Vuyama bersama tetap tersedia untuk klien lain dan picker opsional.
+- Preview desain juga hanya berisi 4 produk, sehingga mode preview tidak memunculkan kembali listing Vuyama yang sudah dihapus.
+- ID/slug teknis `vernola-fashion`, alias Auth lama, folder lokal dan nama repository GitHub dipertahankan untuk kompatibilitas. **Jangan mengganti VITE_STORE_SLUG di Vercel**; env yang sudah dipasang tetap berlaku. Login pengguna memakai novola, bukan alias teknis tersebut.
+- Kategori kosong disimpan untuk pengelolaan admin dan disembunyikan dari katalog pelanggan.
+- Materi siap kirim: [panduan klien PDF](docs/Panduan-Klien-Novola-Fashion.pdf) dan [video promosi 34 detik](deliverables/Promo-Katalog-Dashboard-350-Novola.mp4). Panduan yang dapat diperbarui: [docs/PANDUAN-KLIEN.md](docs/PANDUAN-KLIEN.md). Bagian verifikasi V1/V2/V3 dan detail di bawah adalah rekaman implementasi sebelumnya; angka 31 produk dan akun lama sudah disupersede oleh status ini.
+- Setup/migration impor lama tetap disimpan sebagai riwayat. **Jangan menjalankan ulang seed Vuyama pada toko ini.** Tidak ada SQL baru untuk perubahan brand dan akun ini.
+
+## Riwayat implementasi sebelum koreksi nama
 
 - Storefront pink editorial, navbar menyatu dengan warna tepi logo `#fde9e9`, kategori dinamis, pencarian produk/bahan/seluruh warna, urutan rekomendasi, favorit, tas, dan pesanan melalui WhatsApp.
 - Detail produk dimuat saat dibuka. Koleksi dengan lebih dari 12 warna memiliki pencarian warna sendiri; pilihan mengganti foto dan stok varian yang sesuai. Menu mobile juga menyediakan favorit.
@@ -100,7 +111,7 @@ Vercel untuk repository ini: root directory **`.`** (biarkan default), preset Vi
 
 ## Sumber dan pemeriksaan
 
-Empat contoh Vernola berasal dari folder Drive pengguna. Foto asli `public/assets/product-*.jpg` dipertahankan. Vuyama memakai foto/warna/deskripsi dari `../sugarshawl_150_3/src/data/products.json`, harga dari `retail-prices.json`. Harga pengadaan/reseller tidak diimpor. Logo hasil edit referensi berada di `public/assets/vernola-fashion.png` dan `vernola-logo.webp`; tidak diklaim identik secara piksel dengan sumber. Brief: [docs/FINAL-ENHANCEMENT-BRIEF.md](docs/FINAL-ENHANCEMENT-BRIEF.md).
+Empat contoh Vernola berasal dari folder Drive pengguna. Foto asli `public/assets/product-*.jpg` dipertahankan. Vuyama memakai foto/warna/deskripsi dari `../sugarshawl_150_3/src/data/products.json`, harga dari `retail-prices.json`. Harga pengadaan/reseller tidak diimpor. Logo terbaru hasil koreksi nama berada di `public/assets/novola-fashion.png` dan `novola-logo.webp`; tidak diklaim identik secara piksel dengan sumber. Brief: [docs/FINAL-ENHANCEMENT-BRIEF.md](docs/FINAL-ENHANCEMENT-BRIEF.md).
 
 - `npm test`: 17 pemeriksaan domain, harga retail, aset shared dan override sparse.
 - `npm run build`: production build dan verifier bundle/aset.

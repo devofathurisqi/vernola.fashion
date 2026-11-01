@@ -10,7 +10,7 @@ export const sample = {
   store: {
     id: "00000000-0000-4000-8000-000000000001",
     slug: "vernola-fashion",
-    name: "Vernola.fashion",
+    name: "Novola.fashion",
     whatsapp: "6281368732131",
     tagline: "Everyday Elegance, Everyday Comfort",
   },

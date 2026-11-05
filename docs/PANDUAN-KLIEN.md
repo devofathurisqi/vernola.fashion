@@ -30,12 +30,12 @@ Saat serah terima, katalog berisi empat produk contoh Novola. Seluruh produk Vuy
 ## Mengunggah dan mengurutkan foto
 
 1. Pada bagian **Foto produk**, tekan **Klik untuk menambahkan foto**.
-2. Pilih JPG, PNG, atau WebP, maksimal 15 MB per foto. Maksimal delapan foto galeri untuk satu produk.
-3. Tunggu proses upload selesai. Website otomatis memperkecil foto untuk tampilan yang lebih ringan.
+2. Pilih foto asli JPG, PNG, atau WebP. Tidak perlu kompres manual; aplikasi tidak menetapkan batas ukuran file. Maksimal delapan foto galeri untuk satu produk.
+3. Tunggu status penyiapan dan upload selesai. Website otomatis mengoptimalkan foto agar tetap jelas dan ringan.
 4. Foto pertama menjadi sampul produk. Gunakan tombol panah kiri atau kanan untuk mengubah urutan foto.
 5. Gunakan tombol hapus pada foto yang ingin dilepas, lalu simpan perubahan produk.
 
-Gunakan foto yang terang, tajam, dan konsisten. Periksa kembali bahwa foto yang dipilih sesuai dengan barang dan warna yang dijual. Jika upload gagal, coba foto yang lebih kecil dan periksa koneksi internet.
+Gunakan foto yang terang, tajam, dan konsisten. Periksa kembali bahwa foto yang dipilih sesuai dengan barang dan warna yang dijual. Jika upload gagal, periksa koneksi internet dan format foto, lalu coba lagi.
 
 ## Mengatur pilihan warna
 
@@ -110,6 +110,6 @@ Nomor tersebut digunakan pada tautan kontak dan pemesanan. Penggantian logo, tem
 
 **Kategori belum muncul di katalog:** kategori harus memiliki produk yang ditampilkan kepada pelanggan.
 
-**Foto gagal diunggah:** periksa koneksi, format foto dan batas ukuran, lalu coba kembali. Tunggu upload selesai sebelum menyimpan.
+**Foto gagal diunggah:** periksa koneksi dan pastikan foto JPG, PNG, atau WebP dapat dibuka, lalu coba kembali. Ukuran foto ditangani otomatis. Tunggu upload selesai sebelum menyimpan.
 
 **Login atau simpan gagal:** periksa username serta koneksi, lalu gunakan Muat ulang dashboard. Jika masih gagal atau akses terlupa, hubungi pengelola dan sertakan nama produk serta pesan kesalahannya. Jangan membagikan kata sandi di screenshot.

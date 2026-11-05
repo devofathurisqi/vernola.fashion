@@ -1,0 +1,61 @@
+{
+  "store": "vernola_fashion",
+  "gallerySamples": [
+    {
+      "original": "large-photo.png",
+      "inputBytes": 60099219,
+      "outputBytes": 156966,
+      "width": 2048,
+      "height": 1639,
+      "psnrDb": 44.3
+    },
+    {
+      "original": "80mp-photo.jpg",
+      "inputBytes": 4945734,
+      "outputBytes": 156400,
+      "width": 2048,
+      "height": 1639,
+      "psnrDb": 44.28
+    },
+    {
+      "original": "rotated-photo.jpg",
+      "inputBytes": 720325,
+      "outputBytes": 135500,
+      "width": 1366,
+      "height": 2048,
+      "psnrDb": 43.83
+    },
+    {
+      "original": "transparent.png",
+      "inputBytes": 80338,
+      "outputBytes": 5718,
+      "width": 2048,
+      "height": 1366
+    },
+    {
+      "original": "complex-noise.png",
+      "inputBytes": 14545753,
+      "outputBytes": 977898,
+      "width": 1250,
+      "height": 1250
+    },
+    {
+      "original": "small.webp",
+      "inputBytes": 26224,
+      "outputBytes": 18508,
+      "width": 480,
+      "height": 320,
+      "psnrDb": 43.97
+    }
+  ],
+  "variantLargeUpload": true,
+  "worker": true,
+  "renderedOptimizedImages": true,
+  "nativeCanvasFallback": true,
+  "noHorizontalOverflow": true,
+  "browserErrors": [],
+  "unitTests": 33,
+  "newUploadRegressions": 11,
+  "productionBuild": "passed",
+  "backend": "Isolated Auth/database/Storage stubs; no production writes"
+}

@@ -1,3 +1,4 @@
+import { optimizePhoto } from './image-upload.js';
 import { createClient } from "@supabase/supabase-js";
 import { brand } from "./config";
 import { productPayload } from "./domain";
@@ -170,40 +171,23 @@ export async function loadActivity(storeId) {
   if (error) return null;
   return data;
 }
-export async function uploadPhoto(file, storeId) {
-  if (
-    !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
-    file.size > 15 * 1024 * 1024
-  )
-    throw Error("Gunakan JPG, PNG, atau WebP, maksimal 15 MB.");
-  const bitmap = await createImageBitmap(file);
-  if (bitmap.width * bitmap.height > 60000000) {
-    bitmap.close();
-    throw Error(
-      "Resolusi foto terlalu besar. Gunakan foto di bawah 60 megapiksel.",
-    );
-  }
-  const scale = Math.min(1, 1400 / Math.max(bitmap.width, bitmap.height));
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bitmap.width * scale);
-  canvas.height = Math.round(bitmap.height * scale);
-  canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  bitmap.close();
-  let blob;
-  for (const quality of [0.84, 0.72, 0.6]) {
-    blob = await new Promise((r) => canvas.toBlob(r, "image/webp", quality));
-    if (blob?.size <= 1024 * 1024) break;
-  }
-  if (!blob || blob.size > 1024 * 1024)
-    throw Error("Foto masih terlalu besar. Pilih foto lebih kecil.");
+export async function uploadPhoto(file, storeId, { onProgress = () => {} } = {}) {
+  if (!db) throw Error("Koneksi belum dikonfigurasi.");
+  onProgress('optimizing');
+  const blob = await optimizePhoto(file);
   const path = `${storeId}/${crypto.randomUUID()}.webp`;
+  onProgress('uploading');
   const { error } = await db.storage
     .from("catalog-images")
     .upload(path, blob, {
       contentType: "image/webp",
       cacheControl: "31536000",
     });
-  if (error) throw error;
+  if (error) {
+    if (String(error.statusCode) === '413' || /maximum.*size|exceeded.*size|payload too large/i.test(error.message || ''))
+      throw Error("Penyimpanan foto sedang bermasalah. Coba lagi atau hubungi pengelola.");
+    throw Error("Unggah foto gagal. Periksa koneksi dan coba lagi.");
+  }
   return db.storage.from("catalog-images").getPublicUrl(path).data.publicUrl;
 }
 export async function cleanPhotos(urls, storeId) {

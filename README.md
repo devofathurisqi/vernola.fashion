@@ -4,6 +4,16 @@ Implementasi pertama paket katalog Rp350.000 sekali bayar. Baca file ini saat me
 
 Repository: [devofathurisqi/vernola.fashion](https://github.com/devofathurisqi/vernola.fashion). Folder aplikasi ini merupakan root repository; aplikasi tidak bergantung pada toko lain untuk install, test, atau build.
 
+## Upload foto otomatis — 5 November 2026
+
+Dashboard menerima foto asli JPG, PNG, dan WebP tanpa batas ukuran file atau megapiksel yang ditetapkan aplikasi. Klien tidak perlu mengompres manual. Berlaku untuk galeri produk dan foto setiap varian warna; jumlah galeri tetap delapan foto per produk.
+
+Optimasi berada di aplikasi sebelum transfer ke Supabase, menggunakan background worker jika didukung dan jalur native browser sebagai cadangan. Header dibaca terlebih dahulu agar decoder dapat mengecilkan foto besar; orientasi kamera, rasio aspek dan transparansi dipertahankan. Target sisi terpanjang 2.048 px tanpa memperbesar foto kecil. Encoder mencoba kualitas WebP 90/86/82%; jika masih berat, resolusi disesuaikan otomatis dengan tetap memakai sumber decode yang sama. Browser/perangkat tetap harus mampu membaca file aslinya.
+
+Hanya hasil WebP maksimal 1 MiB yang dikirim ke bucket catalog-images, sehingga batas internal Storage tidak menjadi pekerjaan klien. Tidak ada perubahan database/RLS, bucket, data toko, foto lama, atau master Vuyama. Path UUID baru dan cache satu tahun tetap dipakai. Dashboard menampilkan status penyiapan/pengunggahan dan menahan penyimpanan produk sampai upload selesai.
+
+Engine: src/image-metadata.js, src/image-optimizer.js, src/image-worker.js, src/image-upload.js. Integrasi: src/api.js dan src/Admin.jsx. Uji regresi: tests/image-upload.test.mjs. Lihat [verifikasi upload](qa/UPLOAD-2026-11-05.md).
+
 ## Status terbaru 1 November 2026
 
 - Brand yang benar adalah **Novola.fashion**. Seluruh tulisan, logo, metadata, pesan WhatsApp dan tampilan admin sudah disesuaikan.
@@ -92,7 +102,7 @@ npm run library:publish
 
 Optimizer hanya menangani foto Vernola lokal. `library:prepare` (alias lama `catalog:import`) menghasilkan master/seed/preview dan berkas upload dari sumber Sugar Shawl; tidak mengunggah atau menjalankan SQL. Perintah operator ini memerlukan foto sumber pada workspace `../sugarshawl_150_3/public/assets/images`, yang sengaja tidak dimasukkan ke repository Vernola. Hasil master/manifest/preview sudah disertakan; install, test, build dan penggunaan library online tidak memerlukan folder sumber tersebut. Tinjau hasil sebelum menerapkan perubahan. `library:publish` khusus operator, menerima JSON kredensial melalui stdin tersembunyi, mendukung resume, dan tidak menyimpan secret. Jangan membuat ulang upload untuk setiap klien. `.tools/` berisi artefak operator/QA lokal dan tidak boleh masuk deploy.
 
-Bucket `catalog-images` tetap untuk upload milik toko. JPG/PNG/WebP diperkecil dan dikompresi di browser sebelum upload WebP <=1 MB; folder UUID diperiksa membership. Maksimal 8 foto galeri, foto warna terpisah. File bucket publik, termasuk foto draft bila URL diketahui. Cleanup hanya menghapus file toko sendiri yang tidak lagi direferensikan; tidak menyentuh foto master. Tab ditutup paksa dapat meninggalkan file yatim; audit berkala oleh operator.
+Bucket `catalog-images` tetap untuk upload milik toko. JPG/PNG/WebP asli dioptimalkan otomatis tanpa batas input aplikasi sebelum upload WebP <=1 MiB; folder UUID diperiksa membership. Maksimal 8 foto galeri, foto warna terpisah. File bucket publik, termasuk foto draft bila URL diketahui. Cleanup hanya menghapus file toko sendiri yang tidak lagi direferensikan; tidak menyentuh foto master. Tab ditutup paksa dapat meninggalkan file yatim; audit berkala oleh operator.
 
 ## Performa dan checkout
 

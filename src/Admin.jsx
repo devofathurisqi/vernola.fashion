@@ -1269,8 +1269,10 @@ function ProductEditor({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [colorSearch, setColorSearch] = useState(""),
-    [bulkStock, setBulkStock] = useState("");
+    [bulkStock, setBulkStock] = useState(""),
+    [uploadStatus, setUploadStatus] = useState("");
   const uploaded = useRef([]),
+    uploading = useRef(false),
     saved = useRef(false),
     original = useRef(JSON.stringify(initial));
   const dirty = JSON.stringify(p) !== original.current;
@@ -1296,6 +1298,8 @@ function ProductEditor({
     else onClose();
   }
   async function upload(files, variantId) {
+    if (!files.length || busy || uploading.current) return;
+    uploading.current = true;
     setBusy(true);
     setError("");
     try {
@@ -1303,8 +1307,10 @@ function ProductEditor({
         throw Error("Unggah foto tersedia setelah login ke dashboard online.");
       if (!variantId && p.images.length + files.length > 8)
         throw Error("Maksimal 8 foto galeri per produk.");
-      for (const file of files) {
-        const url = await uploadPhoto(file, storeId);
+      for (const [index, file] of files.entries()) {
+        const url = await uploadPhoto(file, storeId, {
+          onProgress: (phase) => setUploadStatus(`${phase === 'optimizing' ? 'Menyiapkan' : 'Mengunggah'} foto ${index + 1} dari ${files.length}…`),
+        });
         uploaded.current.push(url);
         if (variantId) updateVariant(variantId, { image: url });
         else setP((p) => ({ ...p, images: [...p.images, url] }));
@@ -1312,6 +1318,8 @@ function ProductEditor({
     } catch (e) {
       setError(e.message);
     } finally {
+      uploading.current = false;
+      setUploadStatus("");
       setBusy(false);
     }
   }
@@ -1332,6 +1340,7 @@ function ProductEditor({
       <form
         onSubmit={async (e) => {
           e.preventDefault();
+          if (busy || uploading.current) return;
           setBusy(true);
           setError("");
           try {
@@ -1514,9 +1523,9 @@ function ProductEditor({
               </div>
               <label className={`upload-drop ${busy ? "disabled" : ""}`}>
                 <Upload size={26} />
-                <strong>Klik untuk menambahkan foto</strong>
+                <strong>{uploadStatus || "Klik untuk menambahkan foto"}</strong>
                 <span>
-                  JPG, PNG, WebP · maks. 15 MB per foto · 8 foto galeri
+                  JPG, PNG, WebP · otomatis dioptimalkan · 8 foto galeri
                 </span>
                 <input
                   type="file"
@@ -1572,8 +1581,8 @@ function ProductEditor({
                 ))}
               </div>
               <p className="field-hint">
-                Foto otomatis diperkecil sebelum diunggah. Foto warna dapat
-                diunggah terpisah pada bagian varian.
+                Langsung pilih foto asli tanpa kompres manual. Kualitas foto
+                dioptimalkan otomatis. Foto warna dapat diunggah terpisah.
               </p>
             </section>
             <section className="editor-section">
@@ -1839,10 +1848,10 @@ function ProductEditor({
                 {error}
               </span>
             ) : (
-              <span>
-                {dirty
+              <span role="status" aria-live="polite">
+                {uploadStatus || (dirty
                   ? "Ada perubahan yang belum disimpan."
-                  : "Semua detail siap dikelola."}
+                  : "Semua detail siap dikelola.")}
               </span>
             )}
           </div>

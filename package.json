@@ -14,6 +14,7 @@
     "library:publish": "node scripts/publish-shared-assets.mjs"
   },
   "dependencies": {
+    "@jsquash/webp": "1.5.0",
     "@supabase/supabase-js": "^2.57.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",

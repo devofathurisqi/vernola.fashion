@@ -1,10 +1,11 @@
 import { imageDimensions } from './image-metadata.js';
+import { encodeWebp } from './image-encoding.js';
 
-// Storage accepts 1 MiB WebP; this is an OUTPUT budget, never an input-file limit.
-export const PHOTO_MAX_BYTES = 1024 * 1024;
+// Stay below both decimal 1 MB and the bucket's 1 MiB limit. Never limit input bytes.
+export const PHOTO_MAX_BYTES = 950000;
 export const PHOTO_MAX_EDGE = 2048;
 const qualities = [0.9, 0.86, 0.82];
-const processingError = 'Foto gagal diproses. Coba unggah kembali atau gunakan browser terbaru.';
+const processingError = 'Foto belum berhasil diproses. Periksa koneksi lalu coba unggah kembali.';
 const formatError = 'Foto tidak dapat dibaca. Gunakan file JPG, PNG, atau WebP yang valid.';
 
 export function photoSize(width, height, edge = PHOTO_MAX_EDGE) {
@@ -52,16 +53,6 @@ function makeCanvas(width, height) {
   const canvas = document.createElement('canvas');
   Object.assign(canvas, { width, height });
   return canvas;
-}
-
-async function encodeWebp(canvas, quality) {
-  const blob = typeof canvas.convertToBlob === 'function'
-    ? await canvas.convertToBlob({ type: 'image/webp', quality })
-    : await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', quality));
-  if (!blob?.size) throw Error(processingError);
-  // Unsupported encoders silently return PNG. Never mislabel it as WebP on upload.
-  if (blob.type !== 'image/webp') throw Error('Browser ini belum mendukung optimasi foto. Gunakan Chrome, Edge, Firefox, atau Safari terbaru.');
-  return blob;
 }
 
 export async function optimizeInContext(file, { decode = decodePhoto, canvasFactory = makeCanvas, encode = encodeWebp } = {}) {

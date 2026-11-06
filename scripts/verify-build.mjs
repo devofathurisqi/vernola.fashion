@@ -1,5 +1,8 @@
 import fs from 'node:fs';
 const html=fs.readFileSync('dist/index.html','utf8');
+const webpWasm=fs.readdirSync('dist/assets').filter(f=>/^webp_enc-.*\.wasm$/.test(f));
+if(webpWasm.length!==1||fs.readFileSync('dist/assets/'+webpWasm[0]).subarray(0,4).toString('hex')!=='0061736d')throw Error('Bundled Safari WebP encoder missing/invalid');
+
 if(/sb_secret_/.test(html))throw Error('Secret in HTML');
 if(html.includes('supabase-'))throw Error('Auth SDK preloaded on customer route');
 for(const f of fs.readdirSync('dist/assets').filter(f=>f.endsWith('.js'))){
